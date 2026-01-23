@@ -123,10 +123,14 @@ for i in range(T):
     pi2 = gamma*( x1*sig_q1*sig_q2 + x2*sig_q2**2 ) - \
           (1 - gamma)*sig_q2*sig_J
 
-    mu_q1 = pi1 + rho + gamma*( -C*q1**2*sig_q1**2 + mu_Y )/c - (B - C*q1) - gamma*(gamma + 1)/2*sig_c**2/c**2
-    mu_q1 = mu_q1/( 1 - gamma*( B*q1 - 2*C*q1**2 )/c )
-    r = rho + gamma*( ( B*q1 - 2*C*q1**2 )*mu_q1 - C*q1**2*sig_q1**2 + mu_Y )/c - gamma*(gamma + 1)/2*sig_c**2/c**2
+    mu_Y = kappa*(Y_bar - Y)
 
+    r = rho + gamma*( ( B*q1 - 2*C*q1**2 )*( pi1 - (B - C*q1) ) - C*q1**2*sig_q1**2 + mu_Y )/c -\
+          gamma*(gamma + 1)/2*sig_c**2/c**2
+
+    r = r/( 1 - gamma*( B*q1 - 2*C*q1**2 )/c )
+
+    mu_q1 = r + pi1 - (B - C*q1)
     mu_q2 = r + pi2 - Y/q2
 
     q_old = np.stack((q1, q2), axis=1)
